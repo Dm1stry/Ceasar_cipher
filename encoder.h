@@ -1,3 +1,4 @@
+#pragma once
 #include <QEvent>
 #include <QKeyEvent>
 #include <QString>
