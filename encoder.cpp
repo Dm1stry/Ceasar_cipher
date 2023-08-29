@@ -9,16 +9,16 @@ Encoder::Encoder(char shift, QObject * receiver, QObject* parent/*= 0*/)
 
 bool Encoder::eventFilter(QObject* parent, QEvent* event)
 {
-    if(event->type() == QEvent::KeyPress)
+    if(event->type() == QEvent::KeyPress)  //gets only Keyboard inputs
     {
-        QKeyEvent * key_event = dynamic_cast<QKeyEvent *> (event);
+        QKeyEvent * key_event = dynamic_cast<QKeyEvent *> (event);  //cast to key_event to use it's methods
         int key_number = key_event->key();
-        static const int alphabet_length = (Qt::Key_Z - Qt::Key_A + 1);
-        if((key_number >= Qt::Key_A && key_number <= Qt::Key_Z))
+        constexpr int alphabet_length = (Qt::Key_Z - Qt::Key_A + 1);
+        if((key_number >= Qt::Key_A && key_number <= Qt::Key_Z))  //Handle letters only
         {
-            key_number = (key_number - Qt::Key_A + this->shift_) % alphabet_length + Qt::Key_A;
+            key_number = (key_number - Qt::Key_A + this->shift_) % alphabet_length + Qt::Key_A;  //Gets correct new key code, that is still letter
             QString key_string;
-            if(key_event->modifiers() && Qt::ShiftModifier)
+            if(key_event->modifiers() & Qt::ShiftModifier)
             {
                 key_string = QChar(key_number).toUpper();
             }
@@ -43,9 +43,9 @@ bool Encoder::eventFilter(QObject* parent, QEvent* event)
             );
 
             QApplication::sendEvent(receiver_, &keyRelease);  
-        }
-    }
-    return false;
+        }  //if((key_number >= Qt::Key_A && key_number <= Qt::Key_Z))
+    }  //if(event->type() == QEvent::KeyPress)
+    return false;  //Anyway says that event wasn't processed to source widget could get event too
 }
 
 void Encoder::shiftChanged(int new_shift)

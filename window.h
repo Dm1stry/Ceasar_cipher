@@ -13,7 +13,7 @@ public:
     Window(QWidget* parent = nullptr);
 private:
     QVBoxLayout* window_layout_;
-    QHBoxLayout* shift_layout_;
+    QHBoxLayout* shift_layout_;  //layout that keeps shift setting
     QLabel* shift_label_;
     QSpinBox* shift_spin_box_;
     QLabel* source_text_label_;
